@@ -11,6 +11,7 @@ $router->post("/api/get_collection", "/controller/get_collection.php");
 $router->post("/api/add_collection", "/controller/add_collection.php");
 $router->post("/api/movie_info", "/controller/get_movie_info.php");
 $router->post("/api/get_profile", "/controller/get_profile.php");
+$router->post("/api/search_movie", "/controller/search_movie.php");
 
 // route the user request
 $router->route($_SERVER["REQUEST_METHOD"], parse_url($_SERVER["REQUEST_URI"])["path"]);

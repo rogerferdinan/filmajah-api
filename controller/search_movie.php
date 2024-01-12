@@ -1,29 +1,20 @@
 <?php
     header('Content-Type: application/json; charset=utf-8');
     $post = json_decode(file_get_contents('php://input'), true);
-    $email = (isset($post) && array_key_exists("email", $post)) ? $post["email"] : "";
-    if($email === "") {
-        echo json_encode([
-            "is_success" => False,
-            "message" => "Email cannot be empty"
-        ]);
-        exit();
-    }
-    // sanitize input
-    $email = $GLOBALS["db"]->sanitize($email);
+    $query = (isset($post) && array_key_exists("query", $post)) ? $post["query"] : "";
 
     ['result'=>$result,'error'=>$error] = $GLOBALS["db"]->select(
-        "collection c", 
+        "movies m", 
+        null, 
         [
-            "JOIN movies m" => "m.movie_id = c.movie_id",
-        ], [
-            "m.movie_name", 
+            "m.movie_name",
             "m.rating",
             "m.image_url"
         ], [
-            "email = '$email'"
-        ],
+            "movie_name LIKE '%$query%'"
+        ]
     );
+
     $data = array();
     while($row = $result->fetch_array()) {
         $data[] = [

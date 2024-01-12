@@ -31,7 +31,7 @@
             "m.movie_id",
             "m.movie_name",
             "m.movie_length",
-            "m.release_date",
+            "YEAR(m.release_date) as release_year",
             "m.rating",
             "m.image_url",
             "p.producer_name",
@@ -88,9 +88,10 @@
     }
     
     $data = array();
-    $data[] = [
+    $data = [
         "movie_name" => $row["movie_name"],
         "length" => (int)$row["movie_length"] ?? null,
+        "release_year" => (int)$row["release_year"] ?? null,
         "producer_name" => $row["producer_name"] ?? null,
         "casts" => $cast ?? null,
         "genres" => $genre ?? null,
